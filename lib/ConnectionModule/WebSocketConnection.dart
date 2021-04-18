@@ -3,7 +3,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:schedule_application_conn/ConnectionModule/PasswordEncoder.dart';
-import 'package:schedule_application_entities/DataObjects/UserType.dart';
+import 'package:schedule_application_entities/DataObjects/User.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 
@@ -11,9 +11,8 @@ class WebSocketConnection{
   static final WebSocketConnection _singleton = WebSocketConnection._internal();
   factory WebSocketConnection(){return _singleton;}
   WebSocketConnection._internal();
-  StompClient client;
 
-  T cast<T>(x) => x is T ? x : null;
+  StompClient client;
 
   void connect({@required String email,@required String password,@required UserType userType,@required void Function() onConnect,@required void Function(String) onError}) {
     print('login attempt');

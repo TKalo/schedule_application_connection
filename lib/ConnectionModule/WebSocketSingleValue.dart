@@ -13,18 +13,18 @@ class WebSocketSingleValue{
 
   StompClient client = WebSocketConnection().client;
 
-  Future<User> getCurrentUser(){
+  Future<User> getCurrentUser({bool debug}){
     return WebSocketSingleValueObject<User>(
-        debug: false,
+        debug: debug,
         destination: 'currentUser',
         client: client,
         timeout: 8)
         .execute((dynamic json) => User.fromJson(json));
   }
 
-  Future<Store> getCurrentUserStore(){
+  Future<Store> getCurrentUserStore({bool debug}){
     return WebSocketSingleValueObject<Store>(
-        debug: false,
+        debug: debug,
         destination: 'currentUserStore',
         client: client,
         timeout: 8)
