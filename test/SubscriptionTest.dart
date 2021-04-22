@@ -34,7 +34,7 @@ void main() async{
     expect(post != null, true, reason: 'post is null');
     expect(post is Post<WorkerCreationRequest>, true);
     expect(post.command, PostCommand.ADD, reason: 'wrong command');
-    expect(post.resultList.length, 1,reason: 'wrong resultList length');
+    expect(post.resultList.length > 0, true,reason: 'wrong resultList length');
 
     WorkerCreationRequest request = post.resultList.first;
     expect(request != null, true,reason: 'request is null');
@@ -51,7 +51,7 @@ void main() async{
     expect(post != null, true, reason: 'post is null');
     expect(post is Post<ScheduleTemplate>, true);
     expect(post.command, PostCommand.ADD, reason: 'wrong command');
-    expect(post.resultList.length, 1,reason: 'wrong resultList length');
+    expect(post.resultList.length > 0, true,reason: 'wrong resultList length');
 
     ScheduleTemplate template = post.resultList.first;
     expect(template != null, true,reason: 'request is null');
@@ -69,7 +69,7 @@ void main() async{
     expect(post != null, true, reason: 'post is null');
     expect(post is Post<ShiftTemplate>, true);
     expect(post.command, PostCommand.ADD, reason: 'wrong command');
-    expect(post.resultList.length, 1,reason: 'wrong resultList length');
+    expect(post.resultList.length > 0, true,reason: 'wrong resultList length');
 
     ShiftTemplate template = post.resultList.first;
     expect(template != null, true,reason: 'request is null');

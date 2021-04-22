@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 
 
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:schedule_application_entities/DataObjects/ScheduleTemplate.dart';
 import 'package:schedule_application_entities/DataObjects/ShiftTemplate.dart';
 import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.dart';

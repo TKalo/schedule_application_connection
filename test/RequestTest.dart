@@ -39,7 +39,7 @@ void main() async{
     Completer<bool> completer = Completer();
     WebSocketSubscriptions().userCreationRequest(0, (Post<WorkerCreationRequest> result) {
       if(result.resultList.first.id != 0 && !requestCompleter.isCompleted){ requestCompleter.complete(result.resultList.last);}
-      if(result.resultList.last.id != 0 && result.resultList.last.status == WorkerCreationStatus.accepted) checkAccepted = true;
+      if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.accepted) checkAccepted = true;
       if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.pending) checkPending = true;
       if(result.resultList.first.id != 0 && result.command == PostCommand.DELETE) checkDeleted = true;
       if(checkPending && checkAccepted && checkDeleted) completer.complete(true);
@@ -70,7 +70,7 @@ void main() async{
     Completer<ShiftTemplate> deleteCompleter = Completer();
 
     WebSocketSubscriptions().shiftTemplate(0, (Post<ShiftTemplate> result) {
-      if(result.resultList.last.id == 0) return;
+      if(result.resultList.first.id == 0) return;
       if(result.command == PostCommand.ADD && !addCompleter.isCompleted){ addCompleter.complete(result.resultList.last);}
       if(result.command == PostCommand.UPDATE && !updateCompleter.isCompleted){ updateCompleter.complete(result.resultList.last);}
       if(result.command == PostCommand.DELETE && !deleteCompleter.isCompleted){ deleteCompleter.complete(result.resultList.last);}
@@ -102,7 +102,7 @@ void main() async{
 
     //Delete
     WebSocketRequest().deleteShift(shift.id);
-    shift = await deleteCompleter.future.timeout(Duration(seconds: 8), onTimeout: () => null);;
+    shift = await deleteCompleter.future.timeout(Duration(seconds: 8), onTimeout: () => null);
     expect(shift != null, true,reason: 'shift never deleted');
     expect(shift.startTime, DateTime(2002,3,4,5,6,7),reason: 'startTime wrong');
     expect(shift.endTime,DateTime(2003,3,4,5,6,7),reason: 'endTime wrong');
@@ -110,7 +110,7 @@ void main() async{
     expect(shift.workerType,WorkerType.eighteen_plus,reason: 'workerType wrong');
 
   });
-  //ShiftTemplate(storeId: 1,startTime: DateTime(2000,3,4,5,6,7),endTime: DateTime(2001,4,5,6,7,8), weekDay: WeekDay.friday, workerType: WorkerType.below_eighteen)
+
 }
 
 

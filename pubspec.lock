@@ -240,7 +240,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "0101bf4826c8549b9e94449ee94c5d883802efc8"
+      resolved-ref: "4a0eccc2dc30841696a3bc925c18c314917b9c69"
       url: "https://github.com/TKalo/schedule_application_entities.git"
     source: git
     version: "0.0.1"
