@@ -1,5 +1,6 @@
 
 import 'package:http/http.dart' as http;
+import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
 import 'package:schedule_application_entities/DataObjects/StoreCreationValues.dart';
 import 'package:schedule_application_entities/DataObjects/UserCreationValues.dart';
 
@@ -14,7 +15,7 @@ class RestConnection{
   Future<bool> addDepartment (StoreCreationValues values, {void Function(String) onError}) async {
     try {
       http.Response response = await http.post(
-          Uri.http(url, '/addDepartment'),
+          Uri.http(url, SpringDests.department + SpringDests.add),
           headers: headers,
           body: values.toJson()
       );
@@ -33,7 +34,7 @@ class RestConnection{
   Future<bool> addUser(UserCreationValues values, {void Function(String) onError}) async {
     try {
       http.Response response = await http.post(
-          Uri.http(url, '/addWorker'),
+          Uri.http(url, SpringDests.worker + SpringDests.add),
           headers: headers,
           body: values.toJson()
       );

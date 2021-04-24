@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 
+import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
 import 'package:schedule_application_entities/DataObjects/ScheduleTemplate.dart';
 import 'package:schedule_application_entities/DataObjects/ShiftTemplate.dart';
 import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.dart';
@@ -23,7 +24,7 @@ class WebSocketRequest{
   Future<bool> addWorkerCreationRequest(WorkerType type,{bool debug}){
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'addWorkerCreationRequest',
+      destination: SpringDests.workerCreationRequest + SpringDests.add,
       client: client,
       timeout: 8,
       body: jsonEncode({'type' : EnumParser().enumToString(type)})
@@ -31,10 +32,9 @@ class WebSocketRequest{
   }
 
   Future<bool> deleteWorkerCreationRequest(int id,{bool debug}){
-    print("WebSocketRequest - deleteWorkerCreationRequest");
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'deleteWorkerCreationRequest',
+      destination: SpringDests.workerCreationRequest + SpringDests.delete,
       client: client,
       timeout: 8,
       body: jsonEncode({'id' : id})
@@ -44,7 +44,7 @@ class WebSocketRequest{
   Future<bool> acceptWorkerCreationRequest(int id,{bool debug}){
     return WebSocketRequestObject(
         debug: debug,
-        destination: 'acceptWorkerCreationRequest',
+        destination: SpringDests.workerCreationRequest + SpringDests.accept,
         client: client,
         timeout: 8,
       body: jsonEncode({'id' : id})
@@ -54,7 +54,7 @@ class WebSocketRequest{
   Future<bool> setScheduleTemplate(ScheduleTemplate template,{bool debug}){
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'setScheduleTemplate',
+      destination: SpringDests.scheduleTemplate + SpringDests.update,
       client: client,
       timeout: 8,
       body: jsonEncode(template.toJson())
@@ -64,7 +64,7 @@ class WebSocketRequest{
   Future<bool> addShift(ShiftTemplate shift,{bool debug}){
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'addShiftTemplate',
+      destination: SpringDests.shiftTemplate + SpringDests.add,
       client: client,
       timeout: 8,
       body: jsonEncode(shift.toJson())
@@ -74,7 +74,7 @@ class WebSocketRequest{
   Future<bool> updateShift(ShiftTemplate shift,{bool debug}){
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'updateShiftTemplate',
+      destination: SpringDests.shiftTemplate + SpringDests.update,
       client: client,
       timeout: 8,
       body: jsonEncode(shift.toJson()),
@@ -84,7 +84,7 @@ class WebSocketRequest{
   Future<bool> deleteShift(int id,{bool debug}){
     return WebSocketRequestObject(
       debug: debug,
-      destination: 'deleteShiftTemplate',
+      destination: SpringDests.shiftTemplate + SpringDests.delete,
       client: client,
       timeout: 8,
       body: jsonEncode({'id' : id})
@@ -110,7 +110,7 @@ class WebSocketRequestObject{
     Completer<bool> completer = Completer<bool>();
 
     void Function({Map<String, String> unsubscribeHeaders}) unsubscribe = client.subscribe(
-        destination: '/user/request/' + destination,
+        destination: SpringDests.user + SpringDests.request + destination,
         callback: (StompFrame frame){
           dynamic json = jsonDecode(frame.body);
           if(debug ?? false) print(destination + " - return received: " + json.toString());
@@ -120,7 +120,7 @@ class WebSocketRequestObject{
 
     if(debug ?? false) print(destination + " - body sent: " + body.toString());
     client.send(
-        destination: '/user/request/'  + destination,
+        destination: SpringDests.user + SpringDests.request  + destination,
         body: body
     );
 

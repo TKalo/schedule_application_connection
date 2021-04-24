@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
 import 'package:schedule_application_entities/DataObjects/Store.dart';
 import 'package:schedule_application_entities/DataObjects/User.dart';
 import 'package:stomp_dart_client/stomp.dart';
@@ -16,7 +17,7 @@ class WebSocketSingleValue{
   Future<User> getCurrentUser({bool debug}){
     return WebSocketSingleValueObject<User>(
         debug: debug,
-        destination: 'currentUser',
+        destination: SpringDests.currentUser,
         client: client,
         timeout: 8)
         .execute((dynamic json) => User.fromJson(json));
@@ -25,7 +26,7 @@ class WebSocketSingleValue{
   Future<Store> getCurrentUserStore({bool debug}){
     return WebSocketSingleValueObject<Store>(
         debug: debug,
-        destination: 'currentUserStore',
+        destination: SpringDests.currentStore,
         client: client,
         timeout: 8)
         .execute((dynamic json) => Store.fromJson(json));
@@ -50,7 +51,7 @@ class WebSocketSingleValueObject<T>{
     Completer<T> completer = Completer<T>();
 
     void Function({Map<String, String> unsubscribeHeaders}) unsubscribe = client.subscribe(
-        destination: '/user/subscribe/' + destination,
+        destination: SpringDests.user + SpringDests.subscribe + destination,
         callback: (StompFrame frame){
           if(debug) print(destination + " - return received");
           if(debug) print(destination + " - return: " + frame.body);

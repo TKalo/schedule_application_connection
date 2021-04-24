@@ -8,6 +8,7 @@ import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 
+import 'SpringDests.dart';
 import 'WebSocketConnection.dart';
 
 
@@ -23,7 +24,7 @@ class WebSocketSubscriptions{
         client: client,
         id: storeId,
         debug: debug,
-        destination: 'userCreationRequests'
+        destination: SpringDests.workerCreationRequest
     ).execute(onResult,jsonToElement);
   }
 
@@ -32,16 +33,16 @@ class WebSocketSubscriptions{
         client: client,
         id: storeId,
         debug: debug,
-        destination: 'scheduleTemplate'
+        destination: SpringDests.scheduleTemplate
     ).execute(onResult,jsonToElement);
   }
 
-  void shiftTemplate(int storeId, void Function(Post<ShiftTemplate> result) onResult, ShiftTemplate Function(Map<String,dynamic>) jsonToElement,{bool debug}) {
+  void shiftTemplate(int userId, void Function(Post<ShiftTemplate> result) onResult, ShiftTemplate Function(Map<String,dynamic>) jsonToElement,{bool debug}) {
     WebSocketSubscriptionObject<ShiftTemplate>(
         client: client,
-        id: storeId,
+        id: userId,
         debug: debug,
-        destination: 'shiftTemplate'
+        destination: SpringDests.shiftTemplate
     ).execute(onResult,jsonToElement);
   }
 }
@@ -57,7 +58,7 @@ class WebSocketSubscriptionObject<T>{
   void execute(void Function(Post<T> result) onResult, T Function(Map<String,dynamic>) jsonToElement){
 
     client.subscribe(
-        destination: '/app/subscribe/' + destination + '/' + id.toString(),
+        destination: SpringDests.app + SpringDests.subscribe + destination + '/' + id.toString(),
         callback: (StompFrame frame){
           if(debug ?? false) print('WebSocketSubscriptions - ' + destination + ' - return-header: ' + frame.headers.toString());
           if(debug ?? false) print('WebSocketSubscriptions - ' + destination + ' - return-body: ' + frame.body.toString());
