@@ -39,11 +39,11 @@ void main() async{
     Completer<WorkerCreationRequest> requestCompleter = Completer();
     Completer<bool> completer = Completer();
     WebSocketSubscriptions().userCreationRequest(0, (Post<WorkerCreationRequest> result) {
-      print("RESULT LENGTH: " + result.resultList.length.toString());
-      if(result.resultList.first.id != 0 && !requestCompleter.isCompleted){ requestCompleter.complete(result.resultList.last);}
-      if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.accepted) checkAccepted = true;
-      if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.pending) checkPending = true;
-      if(result.resultList.first.id != 0 && result.command == PostCommand.DELETE) checkDeleted = true;
+      if(result.resultList.first.id == 0 || result.resultList.length > 1) return;
+      if(!requestCompleter.isCompleted){ requestCompleter.complete(result.resultList.last);}
+      if(result.resultList.last.status == WorkerCreationStatus.accepted) checkAccepted = true;
+      if(result.resultList.last.status == WorkerCreationStatus.pending) checkPending = true;
+      if(result.command == PostCommand.DELETE) checkDeleted = true;
       if(checkPending && checkAccepted && checkDeleted) completer.complete(true);
     },(Map<String,dynamic> json){return WorkerCreationRequest.fromJson(json);}, debug: true);
 
@@ -75,7 +75,7 @@ void main() async{
     Completer<ShiftTemplate> deleteCompleter = Completer();
 
     WebSocketSubscriptions().shiftTemplate(0, (Post<ShiftTemplate> result) {
-      if(result.resultList.first.id == 0) return;
+      if(result.resultList.first.id == 0 || result.resultList.length > 1) return;
       if(result.command == PostCommand.ADD && !addCompleter.isCompleted){ addCompleter.complete(result.resultList.last);}
       if(result.command == PostCommand.UPDATE && !updateCompleter.isCompleted){ updateCompleter.complete(result.resultList.last);}
       if(result.command == PostCommand.DELETE && !deleteCompleter.isCompleted){ deleteCompleter.complete(result.resultList.last);}
@@ -95,13 +95,13 @@ void main() async{
     //Update
     shift.workerType = WorkerType.eighteen_plus;
     shift.weekDay = WeekDay.saturday;
-    shift.startTime = DateTime(2002,3,4,5,6,7);
-    shift.endTime = DateTime(2003,3,4,5,6,7);
+    shift.startTime = DateTime(2004,3,4,5,6,7);
+    shift.endTime = DateTime(2007,3,4,5,6,7);
     WebSocketRequest().updateShift(shift);
     shift = await updateCompleter.future.timeout(Duration(seconds: 8), onTimeout: () => null);
     expect(shift != null, true,reason: 'shift never updated');
-    expect(shift.startTime, DateTime(2002,3,4,5,6,7),reason: 'startTime wrong');
-    expect(shift.endTime,DateTime(2003,3,4,5,6,7),reason: 'endTime wrong');
+    expect(shift.startTime, DateTime(2004,3,4,5,6,7),reason: 'startTime wrong');
+    expect(shift.endTime,DateTime(2007,3,4,5,6,7),reason: 'endTime wrong');
     expect(shift.weekDay, WeekDay.saturday,reason: 'weekday wrong');
     expect(shift.workerType,WorkerType.eighteen_plus,reason: 'workerType wrong');
 
@@ -109,13 +109,11 @@ void main() async{
     WebSocketRequest().deleteShift(shift.id);
     shift = await deleteCompleter.future.timeout(Duration(seconds: 8), onTimeout: () => null);
     expect(shift != null, true,reason: 'shift never deleted');
-    expect(shift.startTime, DateTime(2002,3,4,5,6,7),reason: 'startTime wrong');
-    expect(shift.endTime,DateTime(2003,3,4,5,6,7),reason: 'endTime wrong');
+    expect(shift.startTime, DateTime(2004,3,4,5,6,7),reason: 'startTime wrong');
+    expect(shift.endTime,DateTime(2007,3,4,5,6,7),reason: 'endTime wrong');
     expect(shift.weekDay, WeekDay.saturday,reason: 'weekday wrong');
     expect(shift.workerType,WorkerType.eighteen_plus,reason: 'workerType wrong');
-
   });
-
 }
 
 
