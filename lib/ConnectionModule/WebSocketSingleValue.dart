@@ -2,9 +2,10 @@
 
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
-import 'package:schedule_application_entities/DataObjects/Store.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
+import 'package:schedule_application_entities/Entities/Store.dart';
+import 'package:schedule_application_entities/Entities/User.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 

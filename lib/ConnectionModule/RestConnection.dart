@@ -1,8 +1,8 @@
 
 import 'package:http/http.dart' as http;
 import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
-import 'package:schedule_application_entities/DataObjects/StoreCreationValues.dart';
-import 'package:schedule_application_entities/DataObjects/UserCreationValues.dart';
+import 'package:schedule_application_entities/Entities/StoreCreationValues.dart';
+import 'package:schedule_application_entities/Entities/UserCreationValues.dart';
 
 class RestConnection{
 

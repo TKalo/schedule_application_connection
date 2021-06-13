@@ -3,7 +3,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:schedule_application_conn/ConnectionModule/PasswordEncoder.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
+import 'package:schedule_application_entities/Enums/Enums.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 

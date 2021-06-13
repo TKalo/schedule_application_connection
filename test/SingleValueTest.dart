@@ -4,8 +4,9 @@ import 'dart:async';
 
 import 'package:schedule_application_conn/ConnectionModule/WebSocketConnection.dart';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketSingleValue.dart';
-import 'package:schedule_application_entities/DataObjects/Store.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
+import 'package:schedule_application_entities/Entities/Store.dart';
+import 'package:schedule_application_entities/Entities/User.dart';
+import 'package:schedule_application_entities/Enums/Enums.dart';
 import 'package:test/test.dart';
 
 void main() async{

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:schedule_application_conn/ConnectionModule/WebSocketConnection.dart';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketSubscription.dart';
-import 'package:schedule_application_entities/DataObjects/Post.dart';
-import 'package:schedule_application_entities/DataObjects/ScheduleTemplate.dart';
-import 'package:schedule_application_entities/DataObjects/ShiftTemplate.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
-import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.dart';
+import 'package:schedule_application_entities/Entities/Post.dart';
+import 'package:schedule_application_entities/Entities/ScheduleTemplate.dart';
+import 'package:schedule_application_entities/Entities/ShiftTemplate.dart';
+import 'package:schedule_application_entities/Entities/WorkerCreationRequest.dart';
+import 'package:schedule_application_entities/Enums/Enums.dart';
 import 'package:test/test.dart';
 
 void main() async{

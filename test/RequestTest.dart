@@ -5,10 +5,10 @@ import 'dart:async';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketConnection.dart';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketRequest.dart';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketSubscription.dart';
-import 'package:schedule_application_entities/DataObjects/Post.dart';
-import 'package:schedule_application_entities/DataObjects/ShiftTemplate.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
-import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.dart';
+import 'package:schedule_application_entities/Entities/Post.dart';
+import 'package:schedule_application_entities/Entities/ShiftTemplate.dart';
+import 'package:schedule_application_entities/Entities/WorkerCreationRequest.dart';
+import 'package:schedule_application_entities/Enums/Enums.dart';
 import 'package:test/test.dart';
 
 void main() async{
@@ -28,6 +28,7 @@ void main() async{
     expect(await connectionCompleter.future, true, reason: 'connection failed');
   });
 
+
   test('WorkerCreationRequest',() async {
 
     //Setup subscription
@@ -38,16 +39,20 @@ void main() async{
     Completer<WorkerCreationRequest> requestCompleter = Completer();
     Completer<bool> completer = Completer();
     WebSocketSubscriptions().userCreationRequest(0, (Post<WorkerCreationRequest> result) {
+      print("RESULT LENGTH: " + result.resultList.length.toString());
       if(result.resultList.first.id != 0 && !requestCompleter.isCompleted){ requestCompleter.complete(result.resultList.last);}
       if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.accepted) checkAccepted = true;
       if(result.resultList.first.id != 0 && result.resultList.last.status == WorkerCreationStatus.pending) checkPending = true;
       if(result.resultList.first.id != 0 && result.command == PostCommand.DELETE) checkDeleted = true;
       if(checkPending && checkAccepted && checkDeleted) completer.complete(true);
     },(Map<String,dynamic> json){return WorkerCreationRequest.fromJson(json);}, debug: true);
+
     //Add
     WebSocketRequest().addWorkerCreationRequest(WorkerType.below_eighteen);
 
-    WorkerCreationRequest request = await requestCompleter.future;
+    WorkerCreationRequest request = await requestCompleter.future.timeout(Duration(seconds: 8), onTimeout: () => null);
+
+    expect(request != null, true);
 
     //Accept
     WebSocketRequest().acceptWorkerCreationRequest(request.id);

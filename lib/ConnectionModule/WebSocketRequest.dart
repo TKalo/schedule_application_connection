@@ -3,12 +3,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-
 import 'package:schedule_application_conn/ConnectionModule/SpringDests.dart';
-import 'package:schedule_application_entities/DataObjects/ScheduleTemplate.dart';
-import 'package:schedule_application_entities/DataObjects/ShiftTemplate.dart';
-import 'package:schedule_application_entities/DataObjects/WorkerCreationRequest.dart';
-import 'package:schedule_application_entities/EnumParser.dart';
+import 'package:schedule_application_entities/Entities/ScheduleTemplate.dart';
+import 'package:schedule_application_entities/Entities/ShiftTemplate.dart';
+import 'package:schedule_application_entities/Enums/Enums.dart';
+import 'package:schedule_application_entities/Helper/EnumParser.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 

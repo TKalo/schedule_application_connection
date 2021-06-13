@@ -2,9 +2,9 @@
 
 import 'dart:async';
 
+import 'package:schedule_application_entities/Enums/Enums.dart';
 import 'package:test/test.dart';
 import 'package:schedule_application_conn/ConnectionModule/WebSocketConnection.dart';
-import 'package:schedule_application_entities/DataObjects/User.dart';
 
 
 void main() async{
